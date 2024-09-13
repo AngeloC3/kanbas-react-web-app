@@ -8,7 +8,7 @@ export default function Dashboard() {
       <div id="wd-dashboard-courses">
 
         <div className="wd-dashboard-course">
-          <img src="/images/reactjs.jpg" width={200} />
+          <img src="/images/reactjs.jpg" width={200} alt="course_image" />
           <div>
             <Link className="wd-dashboard-course-link"
               to="/Kanbas/Courses/1234/Home">
@@ -22,7 +22,7 @@ export default function Dashboard() {
         </div>
 
         <div className="wd-dashboard-course">
-          <img src="/images/reactjs.jpg" width={200} />
+          <img src="/images/reactjs.jpg" width={200} alt="course_image"/>
           <div>
             <Link className="wd-dashboard-course-link"
               to="/Kanbas/Courses/1235/Home">
@@ -36,7 +36,7 @@ export default function Dashboard() {
         </div>
 
         <div className="wd-dashboard-course">
-          <img src="/images/reactjs.jpg" width={200} />
+          <img src="/images/reactjs.jpg" width={200} alt="course_image" />
           <div>
             <Link className="wd-dashboard-course-link"
               to="/Kanbas/Courses/1233/Home">
@@ -50,7 +50,7 @@ export default function Dashboard() {
         </div>
 
         <div className="wd-dashboard-course">
-          <img src="/images/reactjs.jpg" width={200} />
+          <img src="/images/reactjs.jpg" width={200} alt="course_image" />
           <div>
             <Link className="wd-dashboard-course-link"
               to="/Kanbas/Courses/1232/Home">
@@ -64,7 +64,7 @@ export default function Dashboard() {
         </div>
 
         <div className="wd-dashboard-course">
-          <img src="/images/reactjs.jpg" width={200} />
+          <img src="/images/reactjs.jpg" width={200} alt="course_image" />
           <div>
             <Link className="wd-dashboard-course-link"
               to="/Kanbas/Courses/1231/Home">
@@ -78,7 +78,7 @@ export default function Dashboard() {
         </div>
 
         <div className="wd-dashboard-course">
-          <img src="/images/reactjs.jpg" width={200} />
+          <img src="/images/reactjs.jpg" width={200} alt="course_image" />
           <div>
             <Link className="wd-dashboard-course-link"
               to="/Kanbas/Courses/1230/Home">
@@ -92,7 +92,7 @@ export default function Dashboard() {
         </div>
 
         <div className="wd-dashboard-course">
-          <img src="/images/reactjs.jpg" width={200} />
+          <img src="/images/reactjs.jpg" width={200} alt="course_image" />
           <div>
             <Link className="wd-dashboard-course-link"
               to="/Kanbas/Courses/1237/Home">
