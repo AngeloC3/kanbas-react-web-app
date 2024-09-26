@@ -1,10 +1,11 @@
+import { Navigate, Route, Routes } from "react-router";
+import { FaAlignJustify } from "react-icons/fa";
 import CoursesNavigation from "./Navigation";
 import Modules from "./Modules";
 import Home from "./Home";
 import Assignments from "./Assignments";
 import AssignmentEditor from "./Assignments/Editor";
-import { Navigate, Route, Routes } from "react-router";
-import { FaAlignJustify } from "react-icons/fa";
+import PeopleTable from "../People/Table";
 
 export default function Courses() {
     return (
@@ -23,7 +24,12 @@ export default function Courses() {
                 <Route path="Modules" element={<Modules />} />
                 <Route path="Assignments" element={<Assignments />} />
                 <Route path="Assignments/:aid" element={<AssignmentEditor />} />
-                <Route path="People" element={<h2>People</h2>} />
+                <Route path="Piazza" element={<h2>Piazza</h2>} />
+                <Route path="Zoom" element={<h2>Zoom</h2>} />
+                <Route path="Quizzes" element={<h2>Quizzes</h2>} />
+                <Route path="Grades" element={<h2>Grades</h2>} />
+                <Route path="People" element={<PeopleTable />} />
+                <Route path="Settings" element={<h2>Settings</h2>} />
                 </Routes>
             </div>
         </div>
