@@ -1,12 +1,11 @@
 import { IoEllipsisVertical } from "react-icons/io5";
 import { FaPlus } from "react-icons/fa6";
-import GreenCheckmark from "../../Shared/GreenCheckmark";
 
-export default function ModuleControlButtons() {
+export default function AllAssignmentControlButtons() {
   return (
     <div className="float-end">
-      <GreenCheckmark />
       <FaPlus className="fs-4" style={{ bottom: "1px" }} />
-      <IoEllipsisVertical className="fs-4" />
+      <IoEllipsisVertical className="fs-4 ms-2" />
     </div>
-);}
+  );
+}

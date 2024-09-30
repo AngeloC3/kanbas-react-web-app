@@ -19,6 +19,16 @@ body * {  font-family: Arial, Helvetica, sans-serif;  }
 .list-group-item {
   --bs-list-group-border-color: gray;
 }
+
 .wd-lesson {
   border-left: 3px solid green !important;
+}
+
+.wd-assignment {
+  border-left: .3rem solid green !important;
+}
+
+.wd-assignment-link {
+  text-decoration: none;
+  color: inherit;
 }

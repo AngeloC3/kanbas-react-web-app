@@ -1,5 +1,5 @@
 import { FaPlus } from "react-icons/fa6";
-import GreenCheckmark from "./GreenCheckmark";
+import GreenCheckmark from "../../Shared/GreenCheckmark";
 import BlackCircleSlash from "./BlackCircleSlash";
 
 export default function ModulesControls() {
