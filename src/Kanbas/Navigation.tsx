@@ -10,8 +10,10 @@ export default function KanbasNavigation() {
   const isActive = (path: string) => location.pathname.includes(path);
 
   return (
-    <div id="wd-kanbas-navigation" style={{ width: 120 }} 
-         className="list-group rounded-0 position-fixed bottom-0 top-0 d-none d-md-block bg-black z-2">
+    <div 
+      id="wd-kanbas-navigation" 
+      className="list-group rounded-0 position-fixed bottom-0 top-0 d-none d-lg-block bg-black z-2" 
+      style={{ width: 120 }}>
 
       <a id="wd-neu-link" target="_blank" rel="noreferrer" 
         href="https://www.northeastern.edu/"

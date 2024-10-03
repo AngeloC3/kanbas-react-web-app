@@ -10,7 +10,10 @@ export default function CoursesNavigation() {
   const isActive = (path: string) => location.pathname.includes(path);
 
   return (
-    <div id="wd-courses-navigation" className="wd list-group fs-5 rounded-0">
+    <div 
+      id="wd-courses-navigation" 
+      className="wd list-group fs-5 rounded-0 d-none d-lg-block">
+        
       <Link 
         id="wd-course-home-link" 
         className={"list-group-item border border-0"}  
