@@ -15,10 +15,10 @@ export default function Kanbas() {
           <Route path="/" element={<Navigate to="Account" />} />
           <Route path="/Account/*" element={<Account />} />
           <Route path="/Dashboard" element={<Dashboard />} />
-          <Route path="Courses" element={<h2>Courses</h2>} />
+          <Route path="/Courses" element={<h2>Courses</h2>} />
           <Route path="/Courses/:cid/*" element={<Courses />} />
-          <Route path="Calender" element={<h2>Calender</h2>} />
-          <Route path="Inbox" element={<h2>Inbox</h2>} />
+          <Route path="/Calendar" element={<h2>Calendar</h2>} />
+          <Route path="/Inbox" element={<h2>Inbox</h2>} />
         </Routes>
       </div>
     </div>
