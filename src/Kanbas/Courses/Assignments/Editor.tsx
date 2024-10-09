@@ -1,18 +1,28 @@
+import { useParams } from "react-router";
+import { assignments } from "../../Database";
+
+const formatDateTimeLocal = (dateString: string) => {
+    const date = new Date(dateString);
+    const offset = date.getTimezoneOffset() * 60000;
+    const localISOTime = new Date(date.getTime() - offset).toISOString().slice(0, 16);
+    return localISOTime;
+  };  
+
 export default function AssignmentEditor() {
+    const { aid } = useParams();
+    const assignment = assignments.find((assignment) => assignment._id === aid);
+
     return (
         <div id="wd-assignments-editor" className="container mt-4">
             <div className="mb-3">
                 <label htmlFor="wd-name" className="form-label">Assignment Name</label>
-                <input id="wd-name" className="form-control" value="A1" />
+                <input id="wd-name" className="form-control" value={assignment?.title} />
             </div>
 
             <div className="mb-3">
                 <label htmlFor="wd-description" className="form-label">Description</label>
                 <textarea id="wd-description" className="form-control" rows={6}>
-                    The assignment is available online Submit a link to the landing page of your Web application running on Netlify. The landing 
-                    page should include the following: Your full name and section Links to each of the lab assignments Link to the Kanbas 
-                    application Links to all relevant source code repositories The Kanbas application should include a link to navigate back
-                    to the landing page
+                    {assignment?.description}
                 </textarea>
             </div>
 
@@ -22,7 +32,7 @@ export default function AssignmentEditor() {
                         <label htmlFor="wd-points" className="form-label">Points</label>
                     </div>
                     <div className="col-md-9">
-                        <input id="wd-points" className="form-control" value={100} />
+                        <input id="wd-points" className="form-control" value={assignment?.points} />
                     </div>
                 </div>
 
@@ -92,21 +102,24 @@ export default function AssignmentEditor() {
                                 <label htmlFor="wd-assign-to" className="form-label">Assign to</label><br />
                                 <select id="wd-assign-to" className="form-select form-control mb-3" multiple>
                                     <option value="everyone" selected>Everyone</option>
-                                    <option value="masters">Masters</option>
+                                    <option value="masters" selected>Masters</option>
                                 </select>
                             </div>
                             <div>
                                 <label htmlFor="wd-due-date" className="form-label">Due</label><br />
-                                <input type="date" id="wd-due-date" className="form-control" value="2024-05-13" />
+                                <input type="datetime-local" id="wd-due-date" className="form-control" 
+                                    value={assignment?.due_at ? formatDateTimeLocal(assignment.due_at) : ''} />
                             </div>
                             <div className="row mt-2">
                                 <div className="col">
                                     <label htmlFor="wd-available-from" className="form-label">Available from</label><br />
-                                    <input type="date" id="wd-available-from" className="form-control" value="2024-05-06" />
+                                    <input type="datetime-local" id="wd-available-from" className="form-control"
+                                        value={assignment?.avail_at ? formatDateTimeLocal(assignment.avail_at) : ''} />
                                 </div>
                                 <div className="col">
                                     <label htmlFor="wd-available-until" className="form-label">Until</label><br />
-                                    <input type="date" id="wd-available-until" className="form-control" value="2024-05-20" />
+                                    <input type="datetime-local" id="wd-available-until" className="form-control"
+                                        value={assignment?.avail_until ? formatDateTimeLocal(assignment.avail_until) : ''} />
                                 </div>
                             </div>
                         </div>
