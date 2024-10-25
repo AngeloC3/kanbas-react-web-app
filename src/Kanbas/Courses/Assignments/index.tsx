@@ -1,14 +1,16 @@
 import { useParams } from "react-router";
-import { assignments } from "../../Database";
 import { BsGripVertical } from 'react-icons/bs';
 import { FaCaretDown } from "react-icons/fa";
 import { MdOutlineAssignment } from "react-icons/md";
 import AssignmentControls from "./AssignmentControls";
 import AllAssignmentControlButtons from "./AllAssignmentControlButtons";
 import AssignmentControlButtons from './AssignmentControlButtons';
+import { useSelector } from "react-redux";
 
 export default function Assignments() {
   const { cid } = useParams();
+
+  const { assignments } = useSelector((state: any) => state.assignmentsReducer);
 
   return (
     <div id="wd-assignments">
@@ -45,7 +47,7 @@ export default function Assignments() {
                     {new Date(assignment.avail_at).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true })} | 
                     <b className='text-secondary'> Due </b> 
                     {new Date(assignment.due_at).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true })} | 
-                    {assignment.points} points
+                    &nbsp;{assignment.points} points
                   </p>
                 </div>
               </div>
