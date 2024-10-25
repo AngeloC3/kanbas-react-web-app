@@ -11,10 +11,17 @@ export default function Assignments() {
   const { cid } = useParams();
 
   const { assignments } = useSelector((state: any) => state.assignmentsReducer);
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
 
   return (
     <div id="wd-assignments">
-      <AssignmentControls /><br /><br />
+      {currentUser.role === 'FACULTY' && (
+        <>
+          <AssignmentControls />
+          <br />
+          <br />
+        </>
+      )}
       <ul id="wd-assignments" className="list-group rounded-0">
         
         <li className="wd-module list-group-item p-0 mb-5 fs-5 border-gray">
@@ -22,7 +29,11 @@ export default function Assignments() {
             <BsGripVertical className="me-2 fs-3" />
             <FaCaretDown className="me-1" />
             Assignments
-            <AllAssignmentControlButtons />
+            {currentUser.role === 'FACULTY' && (
+              <>
+                <AllAssignmentControlButtons />
+              </>
+            )}
             <div className='float-end me-2 border rounded-4 p-1'>
               40% of Total
             </div>
@@ -51,7 +62,7 @@ export default function Assignments() {
                   </p>
                 </div>
               </div>
-              <AssignmentControlButtons />
+              <AssignmentControlButtons assignmentId={assignment._id} />
             </li>
           ))}
 
