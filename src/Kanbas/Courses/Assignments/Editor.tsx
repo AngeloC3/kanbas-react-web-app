@@ -3,6 +3,8 @@ import { addAssignment, updateAssignment } from "./reducer";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import * as assignmentsClient from "./client";
+import * as coursesClient from "../client";
 
 const formatDateTimeLocal = (dateString: string) => {
     const date = new Date(dateString);
@@ -41,6 +43,16 @@ export default function AssignmentEditor() {
         }
     }, [assignment]);
 
+    const createAssignmentForCourse = async (newAssignment: any) => {
+        if (!cid) return;
+        const assignment = await coursesClient.createAssignmentForCourse(cid, newAssignment);
+        dispatch(addAssignment(assignment));
+    };
+    const saveAssignment = async (assignment: any) => {
+        await assignmentsClient.updateAssignment(assignment);
+        dispatch(updateAssignment(assignment));
+    };
+
     const onCancelClick = () => {
         const pathSegments = location.pathname.split('/');
         pathSegments.pop();
@@ -73,9 +85,9 @@ export default function AssignmentEditor() {
         };
 
         if (assignment === undefined) {
-            dispatch(addAssignment(newAssignment));
+            createAssignmentForCourse(newAssignment);
         } else {
-            dispatch(updateAssignment(newAssignment));
+            saveAssignment(newAssignment);
         }
 
         onCancelClick();

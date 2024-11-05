@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useState } from "react";
-import { addEnrollment, deleteEnrollment } from "./People/enrollmentsReducer";
+import { useState, useEffect } from "react";
+import { addEnrollment, deleteEnrollment, setEnrollments } from "./People/enrollmentsReducer";
+import * as enrollmentsClient from './People/enrollmentsClient';
 
 export default function Dashboard(
   { courses, course, setCourse, addNewCourse, deleteCourse, updateCourse }: {
@@ -18,14 +19,24 @@ export default function Dashboard(
   const { enrollments } = useSelector((state: any) => state.enrollmentsReducer);
   const [showAllCourses, setShowAllCourses] = useState(false);
 
+  useEffect(() => {
+    const fetchEnrollments = async () => {
+      const enrollments = await enrollmentsClient.fetchAllEnrollments();
+      dispatch(setEnrollments(enrollments));
+    };
+    fetchEnrollments();
+  }, [dispatch]);
+
   const toggleEnrollments = () => {
     setShowAllCourses(!showAllCourses);
   };
 
-  const handleUnenroll = (enrollmentId: any) => {
-    dispatch(deleteEnrollment(enrollmentId));
+  const handleUnenroll = async (enrollmentInfo: any) => {
+    await enrollmentsClient.unenrollUser(enrollmentInfo.course, enrollmentInfo.user);
+    dispatch(deleteEnrollment(enrollmentInfo.enrollmentId));
   };
-  const handleEnroll = (enrollmentInfo: any) => {
+  const handleEnroll = async (enrollmentInfo: any) => {
+    await enrollmentsClient.enrollUser(enrollmentInfo.course, enrollmentInfo.user)
     dispatch(addEnrollment(enrollmentInfo));
   };
 
@@ -94,7 +105,7 @@ export default function Dashboard(
                               )?._id;
                               
                               if (enrollmentId) {
-                                handleUnenroll(enrollmentId);
+                                handleUnenroll({enrollmentId: enrollmentId, user: currentUser._id, course: course._id});
                               }
                             }} className="btn btn-danger float-end">
                               Unenroll

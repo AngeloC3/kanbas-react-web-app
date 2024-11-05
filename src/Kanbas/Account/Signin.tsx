@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { setCurrentUser } from "./reducer";
 import { useDispatch } from "react-redux";
-import * as db from "../Database";
 import * as client from "./client";
 
 export default function Signin() {
@@ -10,7 +9,27 @@ export default function Signin() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const signin = async () => {
-    const user =  await client.signin(credentials);
+    let user;
+    try {
+      user =  await client.signin(credentials);
+    } catch {
+      return;
+    }
+    if (!user) return;
+    dispatch(setCurrentUser(user));
+    navigate("/Kanbas/Dashboard");
+  };
+  const autosignin = async (role: string) => {
+    let user;
+    try {
+      if (role === "FACULTY") {
+        user =  await client.signin({username: "iron_man", password: "stark123"});
+      } else {
+        user =  await client.signin({username: "dark_knight", password: "wayne123"});
+      }
+    } catch {
+      return;
+    }
     if (!user) return;
     dispatch(setCurrentUser(user));
     navigate("/Kanbas/Dashboard");
@@ -26,6 +45,7 @@ export default function Signin() {
              onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
              className="form-control mb-2" placeholder="password" type="password" id="wd-password" />
       <button onClick={signin} id="wd-signin-btn" className="btn btn-primary w-100" > Sign in </button>
+      <button onClick={() => autosignin("STUDENT")} id="wd-signin-btn" className="btn btn-primary w-100 mt-2" >Auto Sign in (Dev)</button>
       <Link id="wd-signup-link" to="/Kanbas/Account/Signup"> Sign up </Link>
     </div>
 );}
