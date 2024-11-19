@@ -1,7 +1,15 @@
 import { FaPlus } from "react-icons/fa6";
 import { HiMiniMagnifyingGlass } from "react-icons/hi2";
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export default function AssignmentControls() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const addNewOnClick = () => {
+    navigate(`${location.pathname}/${new Date().getTime().toString()}`)
+  }
+
   return (
     <div id="wd-assignment-controls" className="text-nowrap">
       <div className="position-relative me-5 justify-content-left" style={{ display: 'inline-block' }}>
@@ -23,7 +31,7 @@ export default function AssignmentControls() {
       </div>
 
       <div className="float-end">
-        <button id="wd-add-assignment" className="btn btn-lg btn-danger me-2 float-end ms-1">
+        <button id="wd-add-assignment" className="btn btn-lg btn-danger me-2 float-end ms-1" onClick={addNewOnClick}>
           <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
           Assignment
         </button>
