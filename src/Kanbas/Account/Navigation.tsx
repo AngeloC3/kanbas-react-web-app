@@ -39,6 +39,16 @@ export default function AccountNavigation() {
           <span className={`${isActive('/Kanbas/Account/Profile') ? 'text-black' : 'text-danger'}`}>Profile</span>
         </Link>
       )}
+      {currentUser && currentUser.role === "ADMIN" && (
+        <Link 
+          id="wd-account-profile-link" 
+          className="list-group-item border border-0"  
+          to="/Kanbas/Account/Users"
+        >
+          <span className={`${isActive('/Kanbas/Account/Users') ? 'border-start border-3 border-black pe-2' : ''}`}></span>
+          <span className={`${isActive('/Kanbas/Account/Users') ? 'text-black' : 'text-danger'}`}>Users</span>
+        </Link>
+      )}
     </div>
   );
 }

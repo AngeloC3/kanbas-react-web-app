@@ -11,7 +11,7 @@ const initialState = {
       },
       addAssignment: (state, { payload: assignment }) => {
           const newAssignment: any = {
-            _id: new Date().getTime().toString(),
+            _id: assignment._id,
             title: assignment.title,
             course: assignment.course,
             avail_at: assignment.avail_at,

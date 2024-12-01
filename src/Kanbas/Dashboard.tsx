@@ -1,58 +1,30 @@
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { useState, useEffect } from "react";
-import { addEnrollment, deleteEnrollment, setEnrollments } from "./People/enrollmentsReducer";
-import * as enrollmentsClient from './People/enrollmentsClient';
+import { useSelector } from "react-redux";
 
 export default function Dashboard(
-  { courses, course, setCourse, addNewCourse, deleteCourse, updateCourse }: {
+  { courses, course, setCourse, addNewCourse, deleteCourse, updateCourse, enrolling, setEnrolling, updateEnrollment }: {
     courses: any[];
     course: any;
     setCourse: (course: any) => void;
     addNewCourse: () => void;
     deleteCourse: (course: any) => void;
     updateCourse: () => void;
+    enrolling: boolean; 
+    setEnrolling: (enrolling: boolean) => void;
+    updateEnrollment: (courseId: string, enrolled: boolean) => void;
   }) {
   
-  const dispatch = useDispatch();
   const { currentUser } = useSelector((state: any) => state.accountReducer);
-  const { enrollments } = useSelector((state: any) => state.enrollmentsReducer);
-  const [showAllCourses, setShowAllCourses] = useState(false);
-
-  useEffect(() => {
-    const fetchEnrollments = async () => {
-      const enrollments = await enrollmentsClient.fetchAllEnrollments();
-      dispatch(setEnrollments(enrollments));
-    };
-    fetchEnrollments();
-  }, [dispatch]);
-
-  const toggleEnrollments = () => {
-    setShowAllCourses(!showAllCourses);
-  };
-
-  const handleUnenroll = async (enrollmentInfo: any) => {
-    await enrollmentsClient.unenrollUser(enrollmentInfo.course, enrollmentInfo.user);
-    dispatch(deleteEnrollment(enrollmentInfo.enrollmentId));
-  };
-  const handleEnroll = async (enrollmentInfo: any) => {
-    await enrollmentsClient.enrollUser(enrollmentInfo.course, enrollmentInfo.user)
-    dispatch(addEnrollment(enrollmentInfo));
-  };
-
 
   return (
     <div id="wd-dashboard">
-      <h1 id="wd-dashboard-title">Dashboard</h1>
+      <h1 id="wd-dashboard-title">
+        Dashboard
+        <button onClick={() => setEnrolling(!enrolling)} className="float-end btn btn-primary" >
+          {enrolling ? "My Courses" : "All Courses"}
+        </button>
+      </h1>
       <hr />
-
-      {currentUser.role === 'STUDENT' && (
-        <div className="d-flex justify-content-between align-items-center mb-3">
-          <button className="btn btn-info" onClick={toggleEnrollments}>
-            {showAllCourses ? 'Show Enrolled Courses' : 'Show All Courses'}
-          </button>
-        </div>
-      )}
 
       {currentUser.role === 'FACULTY' && (
         <>
@@ -78,48 +50,28 @@ export default function Dashboard(
       <hr />
       <div id="wd-dashboard-courses" className="row">
         <div className="row row-cols-1 row-cols-md-5 g-4">
-          {(showAllCourses ? courses : courses.filter((course) =>
-            enrollments.some((enrollment: any) =>
-              enrollment.user === currentUser._id && enrollment.course === course._id
-            )
-          )).map((course) => {
-            const isEnrolled = enrollments.some((enrollment: any) => enrollment.course === course._id && enrollment.user === currentUser._id);
+          {courses.map((course) => {
             return (
               <div className="wd-dashboard-course col" style={{ width: "300px" }} key={course._id}>
                 <div className="card rounded-3 overflow-hidden">
                   <Link className="wd-dashboard-course-link text-decoration-none text-dark" to={`/Kanbas/Courses/${course._id}/Home`}>
                     <img src="/images/reactjs.jpg" width="100%" height={160} alt="react" />
                     <div className="card-body">
-                      <h5 className="wd-dashboard-course-title card-title">{course.name}</h5>
+                      <h5 className="wd-dashboard-course-title card-title">
+                        {enrolling && (
+                          <button className={`btn ${ course.enrolled ? "btn-danger" : "btn-success" } float-end`}
+                            onClick={(event) => {
+                              event.preventDefault();
+                              updateEnrollment(course._id, !course.enrolled)}} >
+                            {course.enrolled ? "Unenroll" : "Enroll"}
+                          </button>
+                        )}
+                        {course.name}
+                        </h5>
                       <p className="wd-dashboard-course-title card-text overflow-y-hidden" style={{ maxHeight: 100 }}>
                         {course.description}
                       </p>
                       <button className="btn btn-primary">Go</button>
-                      {currentUser.role === 'STUDENT' && (
-                        <>
-                          {isEnrolled ? (
-                            <button onClick={(event) => {
-                              event.preventDefault();
-                              const enrollmentId = enrollments.find((enrollment: { user: any; course: any; }) => 
-                                enrollment.user === currentUser._id && enrollment.course === course._id
-                              )?._id;
-                              
-                              if (enrollmentId) {
-                                handleUnenroll({enrollmentId: enrollmentId, user: currentUser._id, course: course._id});
-                              }
-                            }} className="btn btn-danger float-end">
-                              Unenroll
-                            </button>
-                          ) : (
-                            <button onClick={(event) => {
-                              event.preventDefault();
-                              handleEnroll({user: currentUser._id, course: course._id}); 
-                            }} className="btn btn-success float-end">
-                              Enroll
-                            </button>
-                          )}
-                        </>
-                      )}
 
                       {currentUser.role === 'FACULTY' && (
                         <>

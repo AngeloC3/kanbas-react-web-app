@@ -1,4 +1,3 @@
-import { courses } from "../Database";
 import { Navigate, Route, Routes, useParams, useLocation } from "react-router";
 import { FaAlignJustify } from "react-icons/fa";
 import CoursesNavigation from "./Navigation";

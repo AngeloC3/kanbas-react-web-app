@@ -23,7 +23,9 @@ export default function Signin() {
     let user;
     try {
       if (role === "FACULTY") {
-        user =  await client.signin({username: "iron_man", password: "stark123"});
+        user =  await client.signin({username: "ring_bearer", password: "shire123"});
+      } else if (role === "ADMIN") {
+        user = await client.signin({username: "iron_man", password: "stark123"});
       } else {
         user =  await client.signin({username: "dark_knight", password: "wayne123"});
       }
@@ -45,7 +47,12 @@ export default function Signin() {
              onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
              className="form-control mb-2" placeholder="password" type="password" id="wd-password" />
       <button onClick={signin} id="wd-signin-btn" className="btn btn-primary w-100" > Sign in </button>
-      <button onClick={() => autosignin("STUDENT")} id="wd-signin-btn" className="btn btn-primary w-100 mt-2" >Auto Sign in (Dev)</button>
+
+      {/* TODO COMMENT THIS */}
+      <button onClick={() => autosignin("ADMIN")} id="wd-signin-btn" className="btn btn-primary w-100 mt-2" >Auto Sign in ADMIN (Dev)</button>
+      <button onClick={() => autosignin("FACULTY")} id="wd-signin-btn" className="btn btn-primary w-100 mt-2" >Auto Sign in FACULTY (Dev)</button>
+      <button onClick={() => autosignin("STUDENT")} id="wd-signin-btn" className="btn btn-primary w-100 mt-2" >Auto Sign in STUDENT (Dev)</button>
+
       <Link id="wd-signup-link" to="/Kanbas/Account/Signup"> Sign up </Link>
     </div>
 );}
