@@ -99,6 +99,8 @@ export default function Kanbas() {
     })
   );};
 
+  console.log(currentUser);
+
   return (
       <Session>
         <div id="wd-kanbas">

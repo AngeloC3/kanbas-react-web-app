@@ -15,6 +15,7 @@ export default function Dashboard(
   }) {
   
   const { currentUser } = useSelector((state: any) => state.accountReducer);
+  console.log(courses);
 
   return (
     <div id="wd-dashboard">
