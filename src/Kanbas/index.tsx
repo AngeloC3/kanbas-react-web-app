@@ -44,9 +44,14 @@ export default function Kanbas() {
     const fetchCourses = async () => {
       try {
         const allCourses = await courseClient.fetchAllCourses();
-        const enrolledCourses = await userClient.findCoursesForUser(
-          currentUser._id
-        );
+        let enrolledCourses: any;
+        if (!currentUser) {
+          enrolledCourses = []
+        } else {
+          enrolledCourses = await userClient.findCoursesForUser(
+            currentUser._id
+          );
+        }
         const courses = allCourses.map((course: any) => {
           if (enrolledCourses.find((c: any) => c._id === course._id)) {
             return { ...course, enrolled: true };
@@ -61,6 +66,9 @@ export default function Kanbas() {
     };
     const findCoursesForUser = async () => {
       try {
+        if (!currentUser) {
+          return;
+        }
         const courses = await userClient.findCoursesForUser(currentUser._id);
         setCourses(courses);
       } catch (error) {
