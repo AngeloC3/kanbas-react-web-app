@@ -4,10 +4,11 @@ import AccountNavigation from "./Navigation";
 import Signin from "./Signin";
 import Profile from "./Profile";
 import Signup from "./Signup";
+import Users from "./Users";
 
 export default function Account() {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
-  const links = currentUser ? ["Profile"] : ["Signin", "Signup"];
+  //const links = currentUser ? ["Profile"] : ["Signin", "Signup"];
 
   return (
     <div id="wd-account-screen">
@@ -22,6 +23,8 @@ export default function Account() {
               <Route path="/Signin" element={<Signin />} />
               <Route path="/Profile" element={<Profile />} />
               <Route path="/Signup" element={<Signup />} />
+              <Route path="/Users" element={<Users />} />
+              <Route path="/Users/:uid" element={<Users />} />
             </Routes>
           </td>
         </tr>

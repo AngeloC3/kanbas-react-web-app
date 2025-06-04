@@ -3,6 +3,7 @@ import GreenCheckmark from "../../Shared/GreenCheckmark";
 import { FaTrash } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteAssignment } from "./reducer";
+import * as assignmentsClient from "./client";
 
 export default function AssignmentControlButtons({ assignmentId }: {
   assignmentId: string; }) {
@@ -10,10 +11,15 @@ export default function AssignmentControlButtons({ assignmentId }: {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   const dispatch = useDispatch();
 
+  const removeAssignment = async (assignmentId: string) => {
+    await assignmentsClient.deleteAssignment(assignmentId);
+    dispatch(deleteAssignment(assignmentId));
+  };
+
   const alertDelete = () => {
     const confirmDelete = window.confirm("Are you sure you want to remove this assignment?");
     if (confirmDelete) {
-      dispatch(deleteAssignment(assignmentId));
+      removeAssignment(assignmentId);
     }
   }
 

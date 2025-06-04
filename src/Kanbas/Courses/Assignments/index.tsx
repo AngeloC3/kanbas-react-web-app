@@ -5,13 +5,25 @@ import { MdOutlineAssignment } from "react-icons/md";
 import AssignmentControls from "./AssignmentControls";
 import AllAssignmentControlButtons from "./AllAssignmentControlButtons";
 import AssignmentControlButtons from './AssignmentControlButtons';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { setAssignments } from "./reducer";
+import * as coursesClient from "../client";
 
 export default function Assignments() {
   const { cid } = useParams();
 
   const { assignments } = useSelector((state: any) => state.assignmentsReducer);
   const { currentUser } = useSelector((state: any) => state.accountReducer);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const fetchModules = async () => {
+      const assignments = await coursesClient.findAssignmentsForCourse(cid as string);
+      dispatch(setAssignments(assignments));
+    };
+    fetchModules();
+  }, [cid, dispatch]);
 
   return (
     <div id="wd-assignments">
